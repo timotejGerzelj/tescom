@@ -1,10 +1,27 @@
-<form id="itemAddForm">
-    <label for="itemName">Ime izdelka:</label>
-    <input id="itemName" type="text" /><br>
-    <label for="quantity">Količina:</label>
-    <input id="quantity" type="number" />
-    <label for="measureUnit">Merska enota:</label>
-    <input id="measureUnit" type="text" /><br>
-    <label for="description">Opis izdelka:</label>
-    <textarea id="description" type="text" ></textarea>
+<form id="itemAddForm" class="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-md space-y-4">
+  <div>
+    <label for="itemName" class="block text-sm font-medium text-gray-700">Ime izdelka:</label>
+    <input id="itemName" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+
+  <div>
+    <label for="quantity" class="block text-sm font-medium text-gray-700">Količina:</label>
+    <input id="quantity" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+
+  <div>
+    <label for="measureUnit" class="block text-sm font-medium text-gray-700">Merska enota:</label>
+    <input id="measureUnit" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+
+  <div>
+    <label for="description" class="block text-sm font-medium text-gray-700">Opis izdelka:</label>
+    <textarea id="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+  </div>
+
+  <div class="text-right">
+    <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-md hover:bg-blue-700 transition">
+      Dodaj izdelek
+    </button>
+  </div>
 </form>
