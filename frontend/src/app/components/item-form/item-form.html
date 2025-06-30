@@ -1,27 +1,32 @@
-<form id="itemAddForm" class="">
-  <div>
-    <label for="itemName" class="">Ime izdelka:</label>
-    <input id="itemName" type="text" class="" />
-  </div>
+<div class="w-full max-w-xs"> 
+  <form id="itemAddForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <fieldset class="{{'fieldset'}}">
+      <legend class="{{'fieldset-legend'}}">Ime izdelka:</legend>
+      <input type="text" id="itemName" class="input" placeholder="Vnesi ime izdelka tukaj" />
+    </fieldset>
 
-  <div>
-    <label for="quantity" class="">Količina:</label>
-    <input id="quantity" type="number" class="" />
-  </div>
+    <fieldset class="{{'fieldset'}}">
+      <legend class="{{'fieldset-legend'}}">Količina:</legend>
+      <input type="number" id="itemQuantity" class="input" placeholder="Vnesi količino tukaj..." />
+    </fieldset>
 
-  <div>
-    <label for="measureUnit" class="">Merska enota:</label>
-    <input id="measureUnit" type="text" class="" />
-  </div>
+    <fieldset class="{{'fieldset'}}">
+      <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
+      <input type="text" id="measureUnit" class="input" placeholder="Vnesi merilno enoto tukaj..." />
+    </fieldset>
 
-  <div>
-    <label for="description" class="">Opis izdelka:</label>
-    <textarea id="description" class=""></textarea>
-  </div>
- <h1>hello?</h1>
-  <div class="text-right">
-    <button class="{{'btn'}}" type="submit" class="">
-      Dodaj izdelek
-    </button>
-  </div>
-</form>
+    <fieldset class="{{'fieldset'}} {{'text-center'}}">
+      <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
+      <textarea type="text" id="description" class="input" placeholder="Vnesi merilno enoto tukaj..." ></textarea>
+    </fieldset>
+
+    <div class="text-center flex items-center justify-between">
+      <button class="{{'btn'}}" type="submit" class="">
+        Dodaj izdelek
+      </button>
+      <a class="{{'link'}} inline-block align-baseline" href="#" >
+        Nazaj
+      </a>
+    </div>
+  </form>
+</div>
