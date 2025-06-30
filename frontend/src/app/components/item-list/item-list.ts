@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Item } from '../../models/item.model';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'item-list',
-  imports: [BrowserModule],
+  imports: [CommonModule],
   templateUrl: './item-list.html',
   styleUrl: './item-list.css'
 })

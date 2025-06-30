@@ -1,3 +1,19 @@
 <div>
-    <li *ngFor="let item of mockItems"> <p>{{item.name}}</p> </li>
+    <li *ngFor="let item of mockItems">
+        <div class="{{'card'}} bg-base-100 w-96 shadow-sm">
+            <div class="{{'card-body'}}">
+              <h2 class="{{'card-title'}}">{{item.name}}</h2>
+              <p>{{item.description}}</p>
+              <ul>
+                <li>{{item.price}} €</li>
+                <li>{{item.quantity}} {{item.quantityName}}</li>
+              </ul>
+            </div>
+            <figure>
+              <img
+                src=""
+                alt="Shoes" />
+            </figure>
+        </div>
+    </li>
 </div>
