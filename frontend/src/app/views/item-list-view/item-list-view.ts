@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemList } from "../../components/item-list/item-list";
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -9,5 +10,7 @@ import { ItemList } from "../../components/item-list/item-list";
   styleUrl: './item-list-view.css'
 })
 export class ItemListView {
-
+      
+      
+    
 }

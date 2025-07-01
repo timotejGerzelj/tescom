@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Item } from '../../models/item.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './item-list.css'
 })
 export class ItemList {
-
+constructor(private router: Router) {}
 protected mockItems: Item[] = [
   {
     id: 1,
@@ -61,5 +62,11 @@ protected mockItems: Item[] = [
     description: "Kakovosten bel papir za vsakdanjo pisarniško rabo." as string,
   },
 ];
+
+navigateEditForm(articleId: string) {
+  console.log(articleId)
+  this.router.navigate(['create-items-view', articleId]);
+}
+
 
 }

@@ -1,32 +1,34 @@
-<div class="w-full max-w-xs"> 
-  <form id="itemAddForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <fieldset class="{{'fieldset'}}">
-      <legend class="{{'fieldset-legend'}}">Ime izdelka:</legend>
-      <input type="text" id="itemName" class="input" placeholder="Vnesi ime artikla tukaj" />
-    </fieldset>
+<div class="flex justify-center">
+  <div class="w-full max-w-xs"> 
+    <form id="itemAddForm" class=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center">
+      <fieldset class="{{'fieldset'}}">
+        <legend class="{{'fieldset-legend'}}">Ime izdelka:</legend>
+        <input type="text" id="itemName" class="input" placeholder="Vnesi ime artikla tukaj" />
+      </fieldset>
 
-    <fieldset class="{{'fieldset'}}">
-      <legend class="{{'fieldset-legend'}}">Količina:</legend>
-      <input type="number" id="itemQuantity" class="input" placeholder="Vnesi količino tukaj..." />
-    </fieldset>
+      <fieldset class="{{'fieldset'}}">
+        <legend class="{{'fieldset-legend'}}">Količina:</legend>
+        <input type="number" id="itemQuantity" class="input" placeholder="Vnesi količino tukaj..." />
+      </fieldset>
 
-    <fieldset class="{{'fieldset'}}">
-      <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
-      <input type="text" id="measureUnit" class="input" placeholder="Vnesi merilno enoto tukaj..." />
-    </fieldset>
+      <fieldset class="{{'fieldset'}}">
+        <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
+        <input type="text" id="measureUnit" class="input" placeholder="Vnesi merilno enoto tukaj..." />
+      </fieldset>
 
-    <fieldset class="{{'fieldset'}} {{'text-center'}}">
-      <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
-      <textarea type="text" id="description" class="input" placeholder="opis artikla..." ></textarea>
-    </fieldset>
+      <fieldset class="{{'fieldset'}} {{'text-center'}}">
+        <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
+        <textarea type="text" id="description" class="input" placeholder="opis artikla..." ></textarea>
+      </fieldset>
 
-    <div class="text-center flex items-center justify-between">
-      <button class="{{'btn'}}" type="submit" class="">
-        Dodaj izdelek
-      </button>
-      <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
-        Nazaj
-      </a>
-    </div>
-  </form>
+      <div class="text-center flex items-center justify-between">
+        <button class="{{'btn'}}" type="submit" class="">
+          Dodaj izdelek
+        </button>
+        <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
+          Nazaj
+        </a>
+      </div>
+    </form>
+  </div>
 </div>

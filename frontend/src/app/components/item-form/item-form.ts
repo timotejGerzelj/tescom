@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -9,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class ItemForm {
 
+  protected articleId: string | undefined;
+  constructor(private route: ActivatedRoute) {}
+ngOnInit() {
+    this.articleId = this.route.snapshot.paramMap.get('itemId')?.toString();
+
+    if (this.articleId) {
+      console.log('Edit mode, ID:', this.articleId);
+    } else {
+      console.log('Create mode');
+    }}
 }
