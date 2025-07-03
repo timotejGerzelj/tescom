@@ -1,4 +1,4 @@
-module github.com/timotejGerzelj/tescom-backend
+module github.com/timotejGerzelj/backend
 
 go 1.22.2
 
