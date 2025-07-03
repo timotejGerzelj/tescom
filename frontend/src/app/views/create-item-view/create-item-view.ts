@@ -5,8 +5,8 @@ import { ItemForm } from '../../components/item-form/item-form';
   standalone: true,
   selector: 'create-item',
   imports: [ItemForm],
-  templateUrl: './create-item.html',
-  styleUrl: './create-item.css'
+  templateUrl: './create-item-view.html',
+  styleUrl: './create-item-view.css'
 })
 export class CreateItem {
   
