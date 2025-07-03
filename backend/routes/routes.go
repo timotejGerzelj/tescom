@@ -10,9 +10,9 @@ func RegisterItemRoutes(r *gin.Engine) {
 	{
 		//Handlers declared in the controllers this one is for item.go
 		items.GET("", controllers.GetItems)
-		//items.GET("/:id", handlers.GetItem)
-		//items.POST("", handlers.CreateItem)
-		//items.PUT("/:id", handlers.UpdateItem)
-		//items.DELETE("/:id", handlers.DeleteItem)
+		items.GET("/:id", controllers.GetItem)
+		items.POST("", controllers.CreateItem)
+		items.PUT("/:id", controllers.UpdateItem)
+		items.DELETE("/:id", controllers.DeleteItem)
 	}
 }

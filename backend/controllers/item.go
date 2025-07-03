@@ -22,3 +22,65 @@ func GetItems(c *gin.Context) {
 	//}
 	c.JSON(http.StatusOK, albums)
 }
+
+func GetItem(c *gin.Context) {
+	id := c.Param("id") // get ID from URL path
+
+	// Search for item by ID
+	for _, item := range albums {
+		if item.ID == id {
+			c.JSON(http.StatusOK, item)
+			return
+		}
+	}
+
+	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+}
+
+func CreateItem(c *gin.Context) {
+	var newItem models.Item
+
+	if err := c.ShouldBindJSON(&newItem); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	albums = append(albums, newItem)
+
+	c.JSON(http.StatusCreated, newItem)
+}
+
+func UpdateItem(c *gin.Context) {
+	id := c.Param("id")
+	var updatedItem models.Item
+
+	if err := c.ShouldBindJSON(&updatedItem); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	for i, item := range albums {
+		if item.ID == id {
+			updatedItem.ID = id
+			albums[i] = updatedItem
+			c.JSON(http.StatusOK, updatedItem)
+			return
+		}
+	}
+
+	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+}
+
+func DeleteItem(c *gin.Context) {
+	id := c.Param("id")
+
+	for i, item := range albums {
+		if item.ID == id {
+			albums = append(albums[:i], albums[i+1:]...)
+			c.JSON(http.StatusOK, gin.H{"message": "Item deleted"})
+			return
+		}
+	}
+
+	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+}
