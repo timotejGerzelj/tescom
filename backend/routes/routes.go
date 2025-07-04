@@ -5,11 +5,11 @@ import (
 	"github.com/timotejGerzelj/backend/controllers"
 )
 
-func RegisterItemRoutes(r *gin.Engine) {
+func RegisterItemRoutes(r *gin.Engine, handler *controllers.ItemHandler) {
 	items := r.Group("/items")
 	{
 		//Handlers declared in the controllers this one is for item.go
-		items.GET("", controllers.GetItems)
+		items.GET("", handler.GetItems)
 		items.GET("/:id", controllers.GetItem)
 		items.POST("", controllers.CreateItem)
 		items.PUT("/:id", controllers.UpdateItem)

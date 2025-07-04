@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/timotejGerzelj/backend/models"
+	"github.com/timotejGerzelj/backend/services/items"
 )
 
 var albums = []models.Item{
@@ -13,19 +14,27 @@ var albums = []models.Item{
 	{ID: "3", Name: "Sarah Vaughan and Clifford Brown", Description: "Sarah Vaughan", Price: 39.99},
 }
 
-func GetItems(c *gin.Context) {
-	//calls backend
-	//items, err := services.GetAllItems()
-	//if err != nil {
-	//		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	//		return
-	//}
-	c.JSON(http.StatusOK, albums)
+type ItemHandler struct {
+	Service *items.Service
+}
+
+func NewItemHandler(service *items.Service) *ItemHandler {
+	return &ItemHandler{Service: service}
+}
+
+func (h *ItemHandler) GetItems(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	items, err := h.Service.GetAllItems(ctx)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, items)
 }
 
 func GetItem(c *gin.Context) {
 	id := c.Param("id") // get ID from URL path
-
 	// Search for item by ID
 	for _, item := range albums {
 		if item.ID == id {
