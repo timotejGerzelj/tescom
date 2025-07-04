@@ -9,10 +9,10 @@ func RegisterItemRoutes(r *gin.Engine, handler *controllers.ItemHandler) {
 	items := r.Group("/items")
 	{
 		//Handlers declared in the controllers this one is for item.go
-		items.GET("", handler.GetItems)
-		items.GET("/:id", controllers.GetItem)
-		items.POST("", controllers.CreateItem)
-		items.PUT("/:id", controllers.UpdateItem)
-		items.DELETE("/:id", controllers.DeleteItem)
+		items.GET("", handler.GetItems)    //tested
+		items.GET("/:id", handler.GetItem) //tested
+		items.POST("", handler.CreateItem) //tested
+		items.PUT("/:id", handler.UpdateItem)
+		items.DELETE("/:id", handler.DeleteItem)
 	}
 }

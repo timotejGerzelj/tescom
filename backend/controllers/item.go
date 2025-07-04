@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/timotejGerzelj/backend/models"
@@ -33,63 +34,59 @@ func (h *ItemHandler) GetItems(c *gin.Context) {
 	c.JSON(200, items)
 }
 
-func GetItem(c *gin.Context) {
+func (h *ItemHandler) GetItem(c *gin.Context) {
+	ctx := c.Request.Context()
 	id := c.Param("id") // get ID from URL path
 	// Search for item by ID
-	for _, item := range albums {
-		if item.ID == id {
-			c.JSON(http.StatusOK, item)
-			return
-		}
-	}
+	item := h.Service.GetItem(ctx, id)
 
-	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+	c.JSON(200, item)
 }
 
-func CreateItem(c *gin.Context) {
+func (h *ItemHandler) CreateItem(c *gin.Context) {
 	var newItem models.Item
 
 	if err := c.ShouldBindJSON(&newItem); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	albums = append(albums, newItem)
-
+	err := h.Service.CreateItem(c.Request.Context(), newItem)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusCreated, newItem)
 }
 
-func UpdateItem(c *gin.Context) {
+func (h *ItemHandler) UpdateItem(c *gin.Context) {
 	id := c.Param("id")
-	var updatedItem models.Item
+	var item models.Item
 
-	if err := c.ShouldBindJSON(&updatedItem); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.ShouldBindJSON(&item); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	for i, item := range albums {
-		if item.ID == id {
-			updatedItem.ID = id
-			albums[i] = updatedItem
-			c.JSON(http.StatusOK, updatedItem)
-			return
-		}
+	item.ID = id
+	item.UpdatedAt = time.Now().UTC()
+
+	err := h.Service.UpdateItem(c.Request.Context(), item)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
-	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+	c.JSON(http.StatusOK, gin.H{"message": "Item updated successfully"})
 }
 
-func DeleteItem(c *gin.Context) {
+func (h *ItemHandler) DeleteItem(c *gin.Context) {
 	id := c.Param("id")
 
-	for i, item := range albums {
-		if item.ID == id {
-			albums = append(albums[:i], albums[i+1:]...)
-			c.JSON(http.StatusOK, gin.H{"message": "Item deleted"})
-			return
-		}
+	err := h.Service.DeleteItem(c.Request.Context(), id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
-	c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
+	c.JSON(http.StatusOK, gin.H{"message": "Item deleted succesfully"})
 }

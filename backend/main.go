@@ -19,6 +19,8 @@ type App struct {
 }
 
 var dbpool *pgxpool.Pool
+
+// Declare the items for using them in initialization of other items
 var ctx = context.Background()
 var itemService *items.Service
 var itemHandler *controllers.ItemHandler
@@ -45,9 +47,9 @@ func init() {
 
 func main() {
 	router := gin.Default()
-	//register all routes available to be called for item
 	itemHandler := controllers.NewItemHandler(itemService)
 
+	//register all routes available to be called for item handlers
 	routes.RegisterItemRoutes(router, itemHandler)
 	router.Run("localhost:8080")
 }
