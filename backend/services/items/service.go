@@ -35,6 +35,7 @@ func (s *Service) GetAllItems(ctx context.Context) ([]models.Item, error) {
 			&item.Description,
 			&item.CreatedAt,
 			&item.UpdatedAt,
+			&item.UnitOfMeasure,
 		)
 		if err != nil {
 			return nil, err
@@ -57,6 +58,7 @@ func (s *Service) GetItem(ctx context.Context, itemId string) models.Item {
 		&item.Quantity,
 		&item.Price,
 		&item.Description,
+		&item.UnitOfMeasure,
 		&item.CreatedAt,
 		&item.UpdatedAt)
 	return item
@@ -65,8 +67,8 @@ func (s *Service) GetItem(ctx context.Context, itemId string) models.Item {
 func (s *Service) UpdateItem(ctx context.Context, itemToUpdate models.Item) error {
 	query := `
 		UPDATE Items
-		SET name = $1, quantity = $2, price = $3, description = $4, updated_at = NOW()
-		WHERE ID=$5
+		SET name = $1, quantity = $2, price = $3, description = $4, unit_of_measure = $5, updated_at = NOW()
+		WHERE ID=$6
 	`
 
 	cmdTag, err := s.DB.Exec(ctx, query,
@@ -74,8 +76,10 @@ func (s *Service) UpdateItem(ctx context.Context, itemToUpdate models.Item) erro
 		itemToUpdate.Quantity,
 		itemToUpdate.Price,
 		itemToUpdate.Description,
+		itemToUpdate.UnitOfMeasure,
 		itemToUpdate.ID,
 	)
+	println(err)
 	if err != nil {
 		return err
 	}
@@ -101,7 +105,7 @@ func (s *Service) DeleteItem(ctx context.Context, itemId string) error {
 func (s *Service) CreateItem(ctx context.Context, item models.Item) error {
 	createdAt := time.Now()
 	query := `
-		INSERT INTO Items (ID, name, quantity, price, description, created_at) VALUES (
+		INSERT INTO Items (ID, name, quantity, price, description, unit_of_measure, created_at) VALUES (
     	$1::UUID,
     	$2,
     	$3,
@@ -116,6 +120,7 @@ func (s *Service) CreateItem(ctx context.Context, item models.Item) error {
 		item.Name,
 		item.Quantity,
 		item.Price,
+		item.UnitOfMeasure,
 		item.Description,
 		createdAt,
 	)

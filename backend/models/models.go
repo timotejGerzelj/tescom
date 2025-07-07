@@ -5,14 +5,15 @@ import (
 )
 
 type Item struct {
-	ID          string    `json:"id"`
-	SellerId    string    `json:"sellerId"`
-	Name        string    `json:"name"`
-	Quantity    float64   `json:"quantity"`
-	Price       float64   `json:"price"`
-	Description string    `json:"description"`
-	CreatedAt   time.Time `json:"createdAt"`
-	UpdatedAt   time.Time `json:"updatedAt"`
+	ID            string    `json:"id"`
+	SellerId      string    `json:"sellerId"`
+	Name          string    `json:"name"`
+	Quantity      float64   `json:"quantity"`
+	UnitOfMeasure string    `json:"unitOfMeasure"`
+	Price         float64   `json:"price"`
+	Description   string    `json:"description"`
+	CreatedAt     time.Time `json:"createdAt"`
+	UpdatedAt     time.Time `json:"updatedAt"`
 }
 
 type User struct {
