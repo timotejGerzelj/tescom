@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
@@ -47,6 +48,7 @@ func init() {
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 	itemHandler := controllers.NewItemHandler(itemService)
 
 	//register all routes available to be called for item handlers
