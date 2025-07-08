@@ -17,4 +17,9 @@ export class ItemsService {
   getItem(itemId: string): Observable<Item> {
       return this.http.get<Item>(this.apiUrl + '/items/' + itemId)
   }
+
+  postItem(item: Item): Observable<Item> {
+    console.log("še tukaj")
+    return this.http.post<Item>(this.apiUrl + "/items", item)
+  }
 }

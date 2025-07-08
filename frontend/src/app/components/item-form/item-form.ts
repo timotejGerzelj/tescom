@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemsService } from '../../services/items';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Item } from '../../models/item.model';
 
 @Component({
   standalone: true,
@@ -54,6 +55,17 @@ export class ItemForm {
         console.error('Failed to load items:', err);
       }
     });
+  }
 
+  createItem() {
+    const item = { ...this.itemForm.value } as Item;    
+    if (!this.articleId){
+      console.log(item)
+      console.log("hello")
+      this.itemService.postItem(item).subscribe(
+        result => console.log('Success:', result),
+        err => console.error('Error:', err)
+      );
+    }
   }
 }

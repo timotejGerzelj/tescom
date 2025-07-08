@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/timotejGerzelj/backend/models"
 )
@@ -104,19 +105,21 @@ func (s *Service) DeleteItem(ctx context.Context, itemId string) error {
 
 func (s *Service) CreateItem(ctx context.Context, item models.Item) error {
 	createdAt := time.Now()
+	id := uuid.New()
 	query := `
-		INSERT INTO Items (ID, name, quantity, price, description, unit_of_measure, created_at) VALUES (
-    	$1::UUID,
+		INSERT INTO Items (ID, name, quantity, price, unit_of_measure, description, created_at) VALUES (
+    	$1::UUID, 
     	$2,
     	$3,
     	$4,
     	$5,
-    	$6
+    	$6,
+		$7
 		);
 	`
 
 	cmdTag, err := s.DB.Exec(ctx, query,
-		item.ID,
+		id,
 		item.Name,
 		item.Quantity,
 		item.Price,

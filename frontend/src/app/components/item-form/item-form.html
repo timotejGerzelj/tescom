@@ -8,7 +8,8 @@
 
       <fieldset class="{{'fieldset'}}">
         <legend class="{{'fieldset-legend'}}">Količina:</legend>
-        <input type="number" id="quantity"  class="input" formControlName="quantity" placeholder="Vnesi količino tukaj..." />
+        <input type="number" id="quantity"  class="input validator" formControlName="quantity" min="1" placeholder="Količina rabi biti pozitivna ter številka"
+         placeholder="Vnesi količino tukaj..." />
       </fieldset>
 
       <fieldset class="{{'fieldset'}}">
@@ -17,7 +18,8 @@
       </fieldset>
       <fieldset class="{{'fieldset'}}">
         <legend class="{{'fieldset-legend'}}">Cena:</legend>
-        <input type="text" id="price" class="input" formControlName="price" placeholder="Vnesi ceno tukaj..." />
+        <input type="number" id="price" class="input validator" min="1" placeholder="Cena rabi biti pozitivna ter številka"
+         formControlName="price" placeholder="Vnesi ceno tukaj..." />
       </fieldset>
 
       <fieldset class="{{'fieldset'}} {{'text-center'}}">
@@ -26,7 +28,7 @@
       </fieldset>
 
       <div class="text-center flex items-center justify-between">
-        <button class="{{'btn'}}" type="submit">
+        <button (click)="createItem()" class="{{'btn'}}" type="submit">
           Dodaj izdelek
         </button>
         <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
