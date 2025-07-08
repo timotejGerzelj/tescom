@@ -1,5 +1,5 @@
-<div class="flex flex-wrap md:inline-flex bg-base-100 ">
-    <ul *ngFor="let item of items">
+<ul> 
+    <li class="flex flex-wrap md:inline-flex bg-base-100 " *ngFor="let item of items()">
         <div class="{{'card'}} bg-base-100 w-96 shadow-sm mx-7 my-5">
             <div class="{{'card-body'}}">
               <h2 class="{{'card-title'}}">{{item.name}}</h2>
@@ -20,5 +20,5 @@
                 alt="Shoes" />
             </figure>
         </div>
-    </ul>
-</div>
+    </li>
+</ul>

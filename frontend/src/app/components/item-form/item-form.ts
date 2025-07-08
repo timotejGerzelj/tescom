@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemsService } from '../../services/items';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Item } from '../../models/item.model';
@@ -15,7 +15,7 @@ import { Item } from '../../models/item.model';
 export class ItemForm {
 
   protected articleId: string | undefined;
-  constructor(private route: ActivatedRoute, private itemService: ItemsService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private itemService: ItemsService) {}
   public itemForm = new FormGroup({
     name: new FormControl(''),
     quantity: new FormControl<number | null>(null),
@@ -42,7 +42,6 @@ export class ItemForm {
   getItem(itemId: string) {
     this.itemService.getItem(itemId).subscribe({
       next: (data) => {
-        console.log(data)
         this.itemForm.patchValue({      
           name:  data.name,      
           quantity: data.quantity,
@@ -61,7 +60,9 @@ export class ItemForm {
     const item = { ...this.itemForm.value } as Item;    
     if (!this.articleId){
       this.itemService.postItem(item).subscribe({
-        next: (res) => console.log('Item posted:', res),
+        next: (res) => {
+          this.router.navigate(['items-list-view']);
+        },
         error: (err) => console.error('Error posting item:', err) 
       }
      );
@@ -71,7 +72,9 @@ export class ItemForm {
     const item = { ...this.itemForm.value } as Item;    
     if (this.articleId){
       this.itemService.putItem(item, this.articleId).subscribe({
-        next: (res) => console.log('Item with ID: ' + this.articleId + ' updated:', res),
+        next: (res) =>  { 
+          this.router.navigate(['items-list-view']);
+        },
         error: (err) => console.error('Error updating item:', err) 
       }
      );
