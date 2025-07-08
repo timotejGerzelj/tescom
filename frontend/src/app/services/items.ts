@@ -19,7 +19,10 @@ export class ItemsService {
   }
 
   postItem(item: Item): Observable<Item> {
-    console.log("še tukaj")
     return this.http.post<Item>(this.apiUrl + "/items", item)
+  }
+
+  putItem(item: Item, itemId: string): Observable<Item> {
+    return this.http.put<Item>(this.apiUrl + "/items/" + itemId, item)
   }
 }

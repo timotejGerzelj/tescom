@@ -80,7 +80,6 @@ func (s *Service) UpdateItem(ctx context.Context, itemToUpdate models.Item) erro
 		itemToUpdate.UnitOfMeasure,
 		itemToUpdate.ID,
 	)
-	println(err)
 	if err != nil {
 		return err
 	}

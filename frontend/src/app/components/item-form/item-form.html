@@ -28,9 +28,16 @@
       </fieldset>
 
       <div class="text-center flex items-center justify-between">
-        <button (click)="createItem()" class="{{'btn'}}" type="submit">
-          Dodaj izdelek
-        </button>
+          @if (!this.articleId) {
+            <button (click)="createItem()" class="{{'btn'}}" type="submit">
+              Ustvari
+            </button>
+          }
+          @else {
+            <button (click)="updateItem()" class="{{'btn'}}" type="submit">
+              Posodobi
+            </button>
+          }
         <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
           Nazaj
         </a>

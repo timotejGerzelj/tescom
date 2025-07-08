@@ -20,7 +20,6 @@ export class ItemList {
   
 
   loadItems(): void {
-    console.log("Hello load")
     this.itemService.getItems().subscribe({
       next: (data) => {
         this.items = data;

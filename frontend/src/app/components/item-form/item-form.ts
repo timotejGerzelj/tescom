@@ -60,12 +60,21 @@ export class ItemForm {
   createItem() {
     const item = { ...this.itemForm.value } as Item;    
     if (!this.articleId){
-      console.log(item)
-      console.log("hello")
-      this.itemService.postItem(item).subscribe(
-        result => console.log('Success:', result),
-        err => console.error('Error:', err)
-      );
+      this.itemService.postItem(item).subscribe({
+        next: (res) => console.log('Item posted:', res),
+        error: (err) => console.error('Error posting item:', err) 
+      }
+     );
+    }
+  }
+  updateItem() {
+    const item = { ...this.itemForm.value } as Item;    
+    if (this.articleId){
+      this.itemService.putItem(item, this.articleId).subscribe({
+        next: (res) => console.log('Item with ID: ' + this.articleId + ' updated:', res),
+        error: (err) => console.error('Error updating item:', err) 
+      }
+     );
     }
   }
 }
