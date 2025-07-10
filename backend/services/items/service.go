@@ -2,11 +2,11 @@ package items
 
 import (
 	"context"
-	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/pocketbase/dbx"
+	"github.com/pocketbase/pocketbase"
 	"github.com/timotejGerzelj/backend/models"
 )
 
@@ -18,120 +18,84 @@ func NewService(db *pgxpool.Pool) *Service {
 	return &Service{DB: db}
 }
 
-func (s *Service) GetAllItems(ctx context.Context) ([]models.Item, error) {
+type PocketbaseItemService struct {
+	pb *pocketbase.PocketBase
+}
+
+func NewPocketbaseItemService(app *pocketbase.PocketBase) *PocketbaseItemService {
+	return &PocketbaseItemService{pb: app}
+}
+
+func (s *PocketbaseItemService) GetAllItems() ([]models.Item, error) {
 	var items []models.Item
-	rows, err := s.DB.Query(ctx, `SELECT * FROM Items`)
+	err := s.pb.DB().NewQuery("SELECT * FROM Items").All(&items)
+
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var item models.Item
-		err := rows.Scan(
-			&item.ID,
-			&item.Name,
-			&item.Quantity,
-			&item.Price,
-			&item.Description,
-			&item.CreatedAt,
-			&item.UpdatedAt,
-			&item.UnitOfMeasure,
-		)
-		if err != nil {
-			return nil, err
-		}
-		items = append(items, item)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-
 	return items, nil
 }
 
-func (s *Service) GetItem(ctx context.Context, itemId string) models.Item {
+func (s *PocketbaseItemService) GetItem(itemId string) models.Item {
 	var item models.Item
-	row := s.DB.QueryRow(ctx, `SELECT * FROM Items WHERE ID=$1`, itemId)
-	row.Scan(&item.ID,
-		&item.Name,
-		&item.Quantity,
-		&item.Price,
-		&item.Description,
-		&item.UnitOfMeasure,
-		&item.CreatedAt,
-		&item.UpdatedAt)
+	s.pb.DB().NewQuery("SELECT * FROM Items WHERE id = {:id}").Bind(dbx.Params{"id": itemId}).One(&item)
+
 	return item
 }
 
-func (s *Service) UpdateItem(ctx context.Context, itemToUpdate models.Item) error {
-	query := `
-		UPDATE Items
-		SET name = $1, quantity = $2, price = $3, description = $4, unit_of_measure = $5, updated_at = NOW()
-		WHERE ID=$6
-	`
+func (s *PocketbaseItemService) CreateItem(item models.Item) error {
+	createdAt := time.Now()
+	//id := uuid.New()
+	_, err := s.pb.DB().NewQuery(`
+		INSERT INTO Items (name, quantity, price, unit_of_measure, description, created_at) VALUES (
+    	{:name}, 
+    	{:quantity},
+    	{:price},
+    	{:unit_of_measure},
+    	{:description},
+    	{:created_at}
+		);
+	`).Bind(dbx.Params{
+		"name":            item.Name,
+		"quantity":        item.Quantity,
+		"price":           item.Price,
+		"unit_of_measure": item.UnitOfMeasure,
+		"description":     item.Description,
+		"created_at":      createdAt,
+	}).Execute()
 
-	cmdTag, err := s.DB.Exec(ctx, query,
-		itemToUpdate.Name,
-		itemToUpdate.Quantity,
-		itemToUpdate.Price,
-		itemToUpdate.Description,
-		itemToUpdate.UnitOfMeasure,
-		itemToUpdate.ID,
-	)
 	if err != nil {
 		return err
-	}
-	if cmdTag.RowsAffected() == 0 {
-		return fmt.Errorf("no item found with ID %s", itemToUpdate.ID)
 	}
 
 	return nil
 }
 
-func (s *Service) DeleteItem(ctx context.Context, itemId string) error {
-	query := `DELETE FROM Items WHERE $1=ID`
-	cmdTag, err := s.DB.Exec(ctx, query, itemId)
+func (s *PocketbaseItemService) UpdateItem(itemToUpdate models.Item) error {
+	_, err := s.pb.DB().NewQuery(`
+		UPDATE Items
+		SET name = {:name}, quantity = {:quantity}, price = {:price}, description = {:description}, unit_of_measure = {:unit_of_measure}, updated_at = DATETIME('now')
+		WHERE id = {:id}
+	`).Bind(dbx.Params{
+		"name":            itemToUpdate.Name,
+		"quantity":        itemToUpdate.Quantity,
+		"price":           itemToUpdate.Price,
+		"unit_of_measure": itemToUpdate.UnitOfMeasure,
+		"description":     itemToUpdate.Description,
+		"id":              itemToUpdate.ID,
+	}).Execute()
+
 	if err != nil {
 		return err
 	}
-	if cmdTag.RowsAffected() == 0 {
-		return fmt.Errorf("no item found with ID %s", itemId)
+
+	return nil
+}
+
+func (s *PocketbaseItemService) DeleteItem(ctx context.Context, itemId string) error {
+	_, err := s.pb.DB().NewQuery(`DELETE FROM Items WHERE id = {:id}`).Bind(dbx.Params{"id": itemId}).Execute()
+	if err != nil {
+		return err
 	}
 	return err
-}
-
-func (s *Service) CreateItem(ctx context.Context, item models.Item) error {
-	createdAt := time.Now()
-	id := uuid.New()
-	query := `
-		INSERT INTO Items (ID, name, quantity, price, unit_of_measure, description, created_at) VALUES (
-    	$1::UUID, 
-    	$2,
-    	$3,
-    	$4,
-    	$5,
-    	$6,
-		$7
-		);
-	`
-
-	cmdTag, err := s.DB.Exec(ctx, query,
-		id,
-		item.Name,
-		item.Quantity,
-		item.Price,
-		item.UnitOfMeasure,
-		item.Description,
-		createdAt,
-	)
-	if err != nil {
-		return err
-	}
-	if cmdTag.RowsAffected() == 0 {
-		return fmt.Errorf("no item found with ID %s", item.ID)
-	}
-
-	return nil
 }

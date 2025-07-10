@@ -5,15 +5,14 @@ import (
 )
 
 type Item struct {
-	ID            string    `json:"id"`
-	SellerId      string    `json:"sellerId"`
-	Name          string    `json:"name"`
-	Quantity      float64   `json:"quantity"`
-	UnitOfMeasure string    `json:"unitOfMeasure"`
-	Price         float64   `json:"price"`
-	Description   string    `json:"description"`
-	CreatedAt     time.Time `json:"createdAt"`
-	UpdatedAt     time.Time `json:"updatedAt"`
+	ID            string  `json:"id"`
+	Name          string  `json:"name"`
+	Quantity      float64 `json:"quantity"`
+	UnitOfMeasure string  `json:"unit_of_measure"`
+	Price         float64 `json:"price"`
+	Description   string  `json:"description"`
+	CreatedAt     string  `json:"created_at"`
+	UpdatedAt     string  `json:"updated_at"`
 }
 
 type User struct {
@@ -41,4 +40,10 @@ type ChatMessage struct {
 	PriceOffer float64   `json:"priceOffer"`
 	CreatedAt  time.Time `json:"createdAt"`
 	UpdatedAt  time.Time `json:"updatedAt"`
+}
+
+type Login struct {
+	HashedPassword string
+	SessionToken   string
+	CSRFToken      string
 }

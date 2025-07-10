@@ -4,16 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/timotejGerzelj/backend/models"
 	"github.com/timotejGerzelj/backend/services/items"
 )
-
-var albums = []models.Item{
-	{ID: "1", Name: "Blue Train", Description: "John Coltrane", Price: 56.99},
-	{ID: "2", Name: "Jeru", Description: "Gerry Mulligan", Price: 17.99},
-	{ID: "3", Name: "Sarah Vaughan and Clifford Brown", Description: "Sarah Vaughan", Price: 39.99},
-}
 
 type ItemHandler struct {
 	Service *items.Service
@@ -23,70 +17,75 @@ func NewItemHandler(service *items.Service) *ItemHandler {
 	return &ItemHandler{Service: service}
 }
 
-func (h *ItemHandler) GetItems(c *gin.Context) {
-	ctx := c.Request.Context()
+type ItemHandlerPocket struct {
+	Service *items.PocketbaseItemService
+}
 
-	items, err := h.Service.GetAllItems(ctx)
+func NewItemHandlerPocket(service *items.PocketbaseItemService) *ItemHandlerPocket {
+	return &ItemHandlerPocket{Service: service}
+}
+
+func (h *ItemHandlerPocket) GetItems(c *core.RequestEvent) error {
+	items, err := h.Service.GetAllItems()
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
-		return
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "Item not found"})
 	}
-	c.JSON(200, items)
+
+	return c.JSON(http.StatusOK, items)
 }
 
-func (h *ItemHandler) GetItem(c *gin.Context) {
-	ctx := c.Request.Context()
-	id := c.Param("id") // get ID from URL path
+func (h *ItemHandlerPocket) GetItem(c *core.RequestEvent) error {
+	id := c.Request.PathValue("id")
 	// Search for item by ID
-	item := h.Service.GetItem(ctx, id)
+	item := h.Service.GetItem(id)
 
-	c.JSON(200, item)
+	return c.JSON(200, item)
 }
 
-func (h *ItemHandler) CreateItem(c *gin.Context) {
+func (h *ItemHandlerPocket) CreateItem(c *core.RequestEvent) error {
 	var newItem models.Item
 
-	if err := c.ShouldBindJSON(&newItem); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	if err := c.BindBody(&newItem); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(500, nil)
 	}
-	err := h.Service.CreateItem(c.Request.Context(), newItem)
+	err := h.Service.CreateItem(newItem)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(500, nil)
 	}
-	c.JSON(http.StatusCreated, newItem)
+	return c.JSON(http.StatusCreated, newItem)
 }
 
-func (h *ItemHandler) UpdateItem(c *gin.Context) {
-	id := c.Param("id")
+func (h *ItemHandlerPocket) UpdateItem(c *core.RequestEvent) error {
+	id := c.Request.PathValue("id")
 	var item models.Item
 
-	if err := c.ShouldBindJSON(&item); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
-		return
+	if err := c.BindBody(&item); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(500, nil)
 	}
 
 	item.ID = id
-	item.UpdatedAt = time.Now().UTC()
+	item.UpdatedAt = time.Now().UTC().GoString()
 
-	err := h.Service.UpdateItem(c.Request.Context(), item)
+	err := h.Service.UpdateItem(item)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Item updated successfully"})
+	return c.JSON(http.StatusOK, map[string]string{
+		"message": "Item was updated",
+	})
 }
 
-func (h *ItemHandler) DeleteItem(c *gin.Context) {
-	id := c.Param("id")
+func (h *ItemHandlerPocket) DeleteItem(c *core.RequestEvent) error {
+	id := c.Request.PathValue("id")
 
 	err := h.Service.DeleteItem(c.Request.Context(), id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Item deleted succesfully"})
+	return c.JSON(http.StatusOK, map[string]string{"message": "Item deleted succesfully"})
 }

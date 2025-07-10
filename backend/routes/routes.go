@@ -1,18 +1,24 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/timotejGerzelj/backend/controllers"
 )
 
-func RegisterItemRoutes(r *gin.Engine, handler *controllers.ItemHandler) {
-	items := r.Group("/items")
-	{
-		//Handlers declared in the controllers this one is for item.go
-		items.GET("", handler.GetItems)          //tested
-		items.GET("/:id", handler.GetItem)       //tested
-		items.POST("", handler.CreateItem)       //tested
-		items.PUT("/:id", handler.UpdateItem)    //tested
-		items.DELETE("/:id", handler.DeleteItem) //tested
+func RegisterItemRoutes(app *pocketbase.PocketBase, handler *controllers.ItemHandlerPocket) {
+	if handler != nil {
+		println("is nil")
 	}
+	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		itemsGroup := se.Router.Group("/items")
+
+		itemsGroup.GET("/", handler.GetItems)
+		itemsGroup.GET("/{id}", handler.GetItem)
+		itemsGroup.POST("/create", handler.CreateItem)
+		itemsGroup.PUT("/{id}", handler.UpdateItem)
+		itemsGroup.DELETE("/{id}", handler.DeleteItem)
+
+		return se.Next()
+	})
 }
