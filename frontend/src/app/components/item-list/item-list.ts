@@ -3,7 +3,7 @@ import { Signal } from '@angular/core';
 import { Item } from '../../models/item.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ItemsService } from '../../services/items';
+import { ItemsService } from '../../services/items.service';
 
 @Component({
   standalone: true,

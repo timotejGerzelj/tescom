@@ -1,0 +1,20 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-xs"> 
+    <form [formGroup]="itemForm" id="itemForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center" >
+      <fieldset class="{{'fieldset'}}">
+        <legend class="{{'fieldset-legend'}}">Uporabniško ime:</legend>
+        <input type="text" id="username" class="input" formControlName="username" placeholder="Vnesi uporabniško ime" />
+      </fieldset>
+      <fieldset class="{{'fieldset'}}">
+        <legend class="{{'fieldset-legend'}}">Uporabniško ime:</legend>
+        <input type="text" id="password" class="input" formControlName="password" placeholder="Vnesi geslo..." />
+      </fieldset>
+
+      <div class="text-center flex items-center justify-between">
+            <button (click)="loginBtnClick()" class="{{'btn'}}" type="submit">
+              Prijavi
+            </button>
+      </div>
+    </form>
+  </div>
+</div>

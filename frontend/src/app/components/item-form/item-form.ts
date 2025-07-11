@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemsService } from '../../services/items';
+import { ItemsService } from '../../services/items.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Item } from '../../models/item.model';
 
