@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -15,10 +14,7 @@ type App struct {
 	DBClient *pgxpool.Pool
 }
 
-var dbpool *pgxpool.Pool
-
 // Declare the items for using them in initialization of other items
-var ctx = context.Background()
 var itemService *items.PocketbaseItemService
 var itemHandler *controllers.ItemHandlerPocket
 

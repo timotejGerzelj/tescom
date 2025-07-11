@@ -18,7 +18,6 @@ export class ItemList {
 public items = signal<Item[]>([]);  public counter = signal<number>(0);
   ngOnInit(): void {
     this.loadItems();
-    console.log("naloyi")
   }
   
 
