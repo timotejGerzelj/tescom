@@ -8,19 +8,24 @@ type Item struct {
 	ID            string  `json:"id"`
 	Name          string  `json:"name"`
 	Quantity      float64 `json:"quantity"`
-	UnitOfMeasure string  `json:"unit_of_measure"`
+	UnitOfMeasure string  `json:"unitOfMeasure"`
 	Price         float64 `json:"price"`
 	Description   string  `json:"description"`
-	CreatedAt     string  `json:"created_at"`
-	UpdatedAt     string  `json:"updated_at"`
+	CreatedAt     string  `json:"createdAt"`
+	UpdatedAt     string  `json:"updatedAt"`
 }
 
 type User struct {
-	ID        string    `json:"id"`
-	Role      bool      `json:"role"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	ID          string    `json:"id"`
+	Password    string    `json:"password"`
+	TokenKey    string    `json:"tokenKey"`
+	Email       string    `json:"email"`
+	Verified    bool      `json:"verified"`
+	PhoneNumber string    `json:"phoneNumber"`
+	Iban        string    `json:"iban"`
+	Role        bool      `json:"role"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 type Chat struct {
