@@ -47,21 +47,21 @@ func (s *PocketbaseItemService) CreateItem(item models.Item) error {
 	createdAt := time.Now()
 	//id := uuid.New()
 	_, err := s.pb.DB().NewQuery(`
-		INSERT INTO Items (name, quantity, price, unit_of_measure, description, created_at) VALUES (
+		INSERT INTO Items (name, quantity, price, unitOfMeasure, description, createdAt) VALUES (
     	{:name}, 
     	{:quantity},
     	{:price},
-    	{:unit_of_measure},
+    	{:unitOfMeasure},
     	{:description},
-    	{:created_at}
+    	{:createdAt}
 		);
 	`).Bind(dbx.Params{
-		"name":            item.Name,
-		"quantity":        item.Quantity,
-		"price":           item.Price,
-		"unit_of_measure": item.UnitOfMeasure,
-		"description":     item.Description,
-		"created_at":      createdAt,
+		"name":          item.Name,
+		"quantity":      item.Quantity,
+		"price":         item.Price,
+		"unitOfMeasure": item.UnitOfMeasure,
+		"description":   item.Description,
+		"createdAt":     createdAt,
 	}).Execute()
 
 	if err != nil {
@@ -74,15 +74,15 @@ func (s *PocketbaseItemService) CreateItem(item models.Item) error {
 func (s *PocketbaseItemService) UpdateItem(itemToUpdate models.Item) error {
 	_, err := s.pb.DB().NewQuery(`
 		UPDATE Items
-		SET name = {:name}, quantity = {:quantity}, price = {:price}, description = {:description}, unit_of_measure = {:unit_of_measure}, updated_at = DATETIME('now')
+		SET name = {:name}, quantity = {:quantity}, price = {:price}, description = {:description}, unitOfMeasure = {:unitOfMeasure}, updatedAt = DATETIME('now')
 		WHERE id = {:id}
 	`).Bind(dbx.Params{
-		"name":            itemToUpdate.Name,
-		"quantity":        itemToUpdate.Quantity,
-		"price":           itemToUpdate.Price,
-		"unit_of_measure": itemToUpdate.UnitOfMeasure,
-		"description":     itemToUpdate.Description,
-		"id":              itemToUpdate.ID,
+		"name":          itemToUpdate.Name,
+		"quantity":      itemToUpdate.Quantity,
+		"price":         itemToUpdate.Price,
+		"unitOfMeasure": itemToUpdate.UnitOfMeasure,
+		"description":   itemToUpdate.Description,
+		"id":            itemToUpdate.ID,
 	}).Execute()
 
 	if err != nil {
