@@ -44,6 +44,8 @@ func RegisterUserRoutes(app *pocketbase.PocketBase, handler *controllers.UserHan
 		userGroup := se.Router.Group("/user")
 		userGroup.Bind(apis.CORS(corsConfig))
 		userGroup.GET("/{id}", handler.GetUser)
+		userGroup.POST("/create", handler.CreateUser)
+		userGroup.PUT("/{id}", handler.UpdateUser)
 
 		return se.Next()
 	})

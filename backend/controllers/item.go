@@ -59,7 +59,7 @@ func (h *ItemHandlerPocket) UpdateItem(c *core.RequestEvent) error {
 	}
 
 	item.ID = id
-	item.UpdatedAt = time.Now().UTC().GoString()
+	item.UpdatedAt = time.Now().UTC()
 
 	err := h.Service.UpdateItem(item)
 	if err != nil {

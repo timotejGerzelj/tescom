@@ -45,7 +45,6 @@ func (s *PocketbaseItemService) GetItem(itemId string) models.Item {
 
 func (s *PocketbaseItemService) CreateItem(item models.Item) error {
 	createdAt := time.Now()
-	//id := uuid.New()
 	_, err := s.pb.DB().NewQuery(`
 		INSERT INTO Items (name, quantity, price, unitOfMeasure, description, createdAt) VALUES (
     	{:name}, 
@@ -72,9 +71,10 @@ func (s *PocketbaseItemService) CreateItem(item models.Item) error {
 }
 
 func (s *PocketbaseItemService) UpdateItem(itemToUpdate models.Item) error {
+	updatedAt := time.Now()
 	_, err := s.pb.DB().NewQuery(`
 		UPDATE Items
-		SET name = {:name}, quantity = {:quantity}, price = {:price}, description = {:description}, unitOfMeasure = {:unitOfMeasure}, updatedAt = DATETIME('now')
+		SET name = {:name}, quantity = {:quantity}, price = {:price}, description = {:description}, unitOfMeasure = {:unitOfMeasure}, updatedAt = {:updatedAt}
 		WHERE id = {:id}
 	`).Bind(dbx.Params{
 		"name":          itemToUpdate.Name,
@@ -82,6 +82,7 @@ func (s *PocketbaseItemService) UpdateItem(itemToUpdate models.Item) error {
 		"price":         itemToUpdate.Price,
 		"unitOfMeasure": itemToUpdate.UnitOfMeasure,
 		"description":   itemToUpdate.Description,
+		"updatedAt":     updatedAt,
 		"id":            itemToUpdate.ID,
 	}).Execute()
 

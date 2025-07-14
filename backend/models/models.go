@@ -5,27 +5,27 @@ import (
 )
 
 type Item struct {
-	ID            string  `json:"id"`
-	Name          string  `json:"name"`
-	Quantity      float64 `json:"quantity"`
-	UnitOfMeasure string  `json:"unitOfMeasure"`
-	Price         float64 `json:"price"`
-	Description   string  `json:"description"`
-	CreatedAt     string  `json:"createdAt"`
-	UpdatedAt     string  `json:"updatedAt"`
+	ID            string    `json:"id"`
+	Name          string    `json:"name"`
+	Quantity      float64   `json:"quantity"`
+	UnitOfMeasure string    `db:"unitOfMeasure" json:"unitOfMeasure"`
+	Price         float64   `json:"price"`
+	Description   string    `json:"description"`
+	CreatedAt     time.Time `json:"createdAt"`
+	UpdatedAt     time.Time `json:"updatedAt"`
 }
 
 type User struct {
-	ID          string    `json:"id"`
-	Password    string    `json:"password"`
-	TokenKey    string    `json:"tokenKey"`
-	Email       string    `json:"email"`
-	Verified    bool      `json:"verified"`
-	PhoneNumber string    `json:"phoneNumber"`
-	Iban        string    `json:"iban"`
-	Role        bool      `json:"role"`
-	CreatedAt   time.Time `json:"createdAt"`
-	UpdatedAt   time.Time `json:"updatedAt"`
+	ID          string    `db:"id" json:"id"`
+	Password    string    `db:"password" json:"password"`
+	TokenKey    string    `db:"tokenKey" json:"tokenKey"`
+	Email       string    `db:"email" json:"email"`
+	Verified    bool      `db:"verified" json:"verified"`
+	PhoneNumber string    `db:"phoneNumber" json:"phoneNumber"`
+	Iban        string    `db:"IBAN" json:"iban"`
+	Role        bool      `db:"role" json:"role"`
+	CreatedAt   time.Time `db:"createdAt" json:"createdAt"`
+	UpdatedAt   time.Time `db:"updatedAt" json:"updatedAt"`
 }
 
 type Chat struct {
@@ -45,10 +45,4 @@ type ChatMessage struct {
 	PriceOffer float64   `json:"priceOffer"`
 	CreatedAt  time.Time `json:"createdAt"`
 	UpdatedAt  time.Time `json:"updatedAt"`
-}
-
-type Login struct {
-	HashedPassword string
-	SessionToken   string
-	CSRFToken      string
 }
