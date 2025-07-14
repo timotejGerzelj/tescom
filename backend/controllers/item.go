@@ -6,22 +6,14 @@ import (
 
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/timotejGerzelj/backend/models"
-	"github.com/timotejGerzelj/backend/services/items"
+	"github.com/timotejGerzelj/backend/services/item"
 )
 
-type ItemHandler struct {
-	Service *items.Service
-}
-
-func NewItemHandler(service *items.Service) *ItemHandler {
-	return &ItemHandler{Service: service}
-}
-
 type ItemHandlerPocket struct {
-	Service *items.PocketbaseItemService
+	Service *item.PocketbaseItemService
 }
 
-func NewItemHandlerPocket(service *items.PocketbaseItemService) *ItemHandlerPocket {
+func NewItemHandlerPocket(service *item.PocketbaseItemService) *ItemHandlerPocket {
 	return &ItemHandlerPocket{Service: service}
 }
 
