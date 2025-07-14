@@ -19,6 +19,7 @@ func NewUserHandlerPocket(service *user.PocketbaseUserService) *UserHandlerPocke
 
 func (h *UserHandlerPocket) GetUser(c *core.RequestEvent) error {
 	id := c.Request.PathValue("id")
+	println("HEllo ", id)
 	user := h.Service.GetUser(id)
 
 	return c.JSON(200, user)

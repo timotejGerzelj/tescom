@@ -16,16 +16,16 @@ type Item struct {
 }
 
 type User struct {
-	ID          string    `db:"id" json:"id"`
-	Password    string    `db:"password" json:"password"`
-	TokenKey    string    `db:"tokenKey" json:"tokenKey"`
-	Email       string    `db:"email" json:"email"`
-	Verified    bool      `db:"verified" json:"verified"`
+	ID          string    `json:"id"`
+	Password    string    `json:"password"`
+	TokenKey    string    `json:"tokenKey"`
+	Email       string    `json:"email"`
+	Verified    bool      `json:"verified"`
 	PhoneNumber string    `db:"phoneNumber" json:"phoneNumber"`
 	Iban        string    `db:"IBAN" json:"iban"`
-	Role        bool      `db:"role" json:"role"`
-	CreatedAt   time.Time `db:"createdAt" json:"createdAt"`
-	UpdatedAt   time.Time `db:"updatedAt" json:"updatedAt"`
+	Role        bool      `json:"role"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 type Chat struct {
