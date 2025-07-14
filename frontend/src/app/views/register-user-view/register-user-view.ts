@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RegisterUserForm } from "../../components/register-user-form/register-user-form";
 
 @Component({
-  selector: 'negotiation-chat-view',
+  selector: 'register-user-view',
   imports: [RegisterUserForm],
-  templateUrl: './negotiation-chat-view.html',
-  styleUrl: './negotiation-chat-view.css'
+  templateUrl: './register-user-view.html',
+  styleUrl: './register-user-view.css'
 })
-export class NegotiationChatView {
+export class RegisterUserView {
 
 }

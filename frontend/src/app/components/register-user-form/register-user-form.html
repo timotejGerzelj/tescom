@@ -1,0 +1,39 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-xs"> 
+    <form [formGroup]="userForm" id="itemForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center" >
+        <fieldset class="{{'fieldset'}}">
+            <legend class="{{'fieldset-legend'}}">Elektronska pošta:</legend>
+            <label class="input validator">
+                <input type="email" id="username" formControlName="username" placeholder="Vnesi elektronsko pošto" required />
+        </label>  
+        </fieldset>
+
+        <fieldset class="{{'fieldset'}}">
+            <legend class="{{'fieldset-legend'}}">Telefonska številka:</legend>
+            <label class="input validator">
+                <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" formControlName="phoneNumber" placeholder="Vnesi telefonsko številko" required />
+        </label>  
+
+        <fieldset class="{{'fieldset'}}">
+            <legend class="{{'fieldset-legend'}}">IBAN:</legend>
+            <label class="input validator">
+                <input type="text" id="iban" name="iban" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" formControlName="iban" placeholder="Vnesi veljaven IBAN" required />
+        </label>  
+        </fieldset>
+
+        </fieldset>
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Geslo:</legend>
+          <label class="input validator">
+              <input type="password" id="password" formControlName="password" placeholder="Vnesi geslo..." required/>
+          </label>
+        </fieldset>
+
+        <div class="text-center flex items-center justify-between">
+              <button  class="{{'btn'}}" type="submit">
+                Prijavi
+              </button>
+        </div>
+    </form>
+  </div>
+</div>
