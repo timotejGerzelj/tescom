@@ -46,6 +46,7 @@ func RegisterUserRoutes(app *pocketbase.PocketBase, handler *controllers.UserHan
 		userGroup.GET("/{id}", handler.GetUser)
 		userGroup.POST("/create", handler.CreateUser)
 		userGroup.PUT("/{id}", handler.UpdateUser)
+		userGroup.DELETE("/{id}", handler.DeleteUser)
 
 		return se.Next()
 	})

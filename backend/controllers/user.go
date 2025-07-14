@@ -19,7 +19,6 @@ func NewUserHandlerPocket(service *user.PocketbaseUserService) *UserHandlerPocke
 
 func (h *UserHandlerPocket) GetUser(c *core.RequestEvent) error {
 	id := c.Request.PathValue("id")
-	// Search for item by ID
 	user := h.Service.GetUser(id)
 
 	return c.JSON(200, user)
@@ -61,4 +60,15 @@ func (h *UserHandlerPocket) UpdateUser(c *core.RequestEvent) error {
 	return c.JSON(http.StatusOK, map[string]string{
 		"message": "Item was updated",
 	})
+}
+
+func (h *UserHandlerPocket) DeleteUser(c *core.RequestEvent) error {
+	id := c.Request.PathValue("id")
+
+	err := h.Service.DeleteUser(c.Request.Context(), id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{"message": "User deleted succesfully"})
 }

@@ -65,7 +65,6 @@ func (s *PocketbaseUserService) CreateUser(user models.User) error {
 func (s *PocketbaseUserService) UpdateUser(userToUpdate models.User) error {
 	layout := "2006-01-02 15:04:05.000Z"
 	parsedTime, _ := time.Parse(layout, "2025-07-10 08:59:35.842Z")
-	println("Hello")
 	println(userToUpdate.PhoneNumber)
 	_, err := s.pb.DB().NewQuery(`
 		UPDATE Users
