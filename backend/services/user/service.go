@@ -56,6 +56,7 @@ func (s *PocketbaseUserService) CreateUser(user models.User) error {
 	}).Execute()
 
 	if errorCreate != nil {
+		println("Hello")
 		return errorCreate
 	}
 

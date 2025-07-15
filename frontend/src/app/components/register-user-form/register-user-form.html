@@ -4,7 +4,7 @@
         <fieldset class="{{'fieldset'}}">
             <legend class="{{'fieldset-legend'}}">Elektronska pošta:</legend>
             <label class="input validator">
-                <input type="email" id="username" formControlName="username" placeholder="Vnesi elektronsko pošto" required />
+                <input type="email" id="username" formControlName="email" placeholder="Vnesi elektronsko pošto" required />
         </label>  
         </fieldset>
 
@@ -28,9 +28,14 @@
               <input type="password" id="password" formControlName="password" placeholder="Vnesi geslo..." required/>
           </label>
         </fieldset>
-
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Potrdi geslo:</legend>
+          <label class="input validator">
+              <input type="password" id="passwordConfirm" formControlName="passwordConfirm" placeholder="Potrdi geslo..." required/>
+          </label>
+        </fieldset>
         <div class="text-center flex items-center justify-between">
-              <button  class="{{'btn'}}" type="submit">
+              <button (click)="registerBtnClick()" class="{{'btn'}}" type="submit">
                 Prijavi
               </button>
         </div>

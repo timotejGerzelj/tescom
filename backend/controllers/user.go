@@ -35,7 +35,11 @@ func (h *UserHandlerPocket) CreateUser(c *core.RequestEvent) error {
 	}
 
 	err := h.Service.CreateUser(newUser)
+	println("hello")
+	println(err)
+
 	if err != nil {
+		println("hello")
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return c.JSON(500, nil)
 	}
