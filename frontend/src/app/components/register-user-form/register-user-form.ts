@@ -14,8 +14,6 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterUserForm {
   constructor(private router: Router, private authService: AuthService) {}
   
-  protected isLoading = false;
-  protected formIsValid = false;
   
   public userForm = new FormGroup({
     email: new FormControl(''),
@@ -27,7 +25,9 @@ export class RegisterUserForm {
     phoneNumber: new FormControl(''),
   }, { validators: this.passwordMatchValidator() });
 
-  //Accessors for forms
+  protected isLoading = false;
+
+  //Accessors for form
   get email() {
     return this.userForm.get('email')
   }
@@ -43,6 +43,7 @@ export class RegisterUserForm {
   get phoneNumber() {
     return this.userForm.get('phoneNumber')
   }
+
   //Custom form validator
   passwordMatchValidator(): ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {  
@@ -51,6 +52,7 @@ export class RegisterUserForm {
     
     return password === passwordConfirm ? null : { passwordMismatch: true };    };
   }
+
 
 
   async registerBtnClick() {

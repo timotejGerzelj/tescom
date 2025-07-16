@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemsService } from '../../services/items.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Item } from '../../models/item.model';
 
 @Component({
@@ -14,7 +14,6 @@ import { Item } from '../../models/item.model';
 })
 export class ItemForm {
 
-  protected articleId: string | undefined;
   constructor(private router: Router, private route: ActivatedRoute, private itemService: ItemsService) {}
   public itemForm = new FormGroup({
     name: new FormControl(''),
@@ -22,7 +21,11 @@ export class ItemForm {
     unitOfMeasure: new FormControl(''),
     price: new FormControl<number | null>(null),
     description: new FormControl(''),
-  });
+  })//, { validators: this.passwordMatchValidator() });
+
+  protected isLoading = false;
+  protected articleId: string | undefined;
+
 
   ngOnInit() {
     this.articleId = this.route.snapshot.paramMap.get('itemId')?.toString();
@@ -37,7 +40,27 @@ export class ItemForm {
           unitOfMeasure: "",
           description: ""
         });
-    }}
+    }
+  }
+  
+  //Accessors for form
+  get name() {
+    return this.itemForm.get('name')
+  }
+  get quantity() {
+    return this.itemForm.get('quantity')
+  }
+  get unitOfMeasure() {
+    return this.itemForm.get('unitOfMeasure')
+  }
+  get price() {
+    return this.itemForm.get('price')
+  }
+  get description() {
+    return this.itemForm.get('description')
+  }
+  //Custom form validators
+
 
   getItem(itemId: string) {
     this.itemService.getItem(itemId).subscribe({
@@ -68,6 +91,7 @@ export class ItemForm {
      );
     }
   }
+
   updateItem() {
     const item = { ...this.itemForm.value } as Item;    
     if (this.articleId){
