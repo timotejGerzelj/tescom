@@ -43,6 +43,9 @@
       <div class="text-center flex items-center justify-between">
             <button (click)="loginBtnClick()" class="{{'btn'}}" type="submit">
               Prijavi
+              @if (isLoading) {
+                  <span class="loading loading-spinner loading-sm"></span>
+              }
             </button>
       </div>
     </form>

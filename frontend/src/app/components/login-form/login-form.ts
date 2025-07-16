@@ -12,6 +12,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 export class LoginForm {
   constructor(private router: Router, private authService: AuthService) {}
   
+  protected isLoading = false;
   public itemForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),

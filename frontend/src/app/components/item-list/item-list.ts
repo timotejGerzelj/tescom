@@ -15,7 +15,7 @@ import { ItemsService } from '../../services/items.service';
 })
 export class ItemList {
   constructor(private router: Router, private itemService: ItemsService, private cd: ChangeDetectorRef) {}
-public items = signal<Item[]>([]);  public counter = signal<number>(0);
+  public items = signal<Item[]>([]);  public counter = signal<number>(0);
   ngOnInit(): void {
     this.loadItems();
   }
@@ -42,8 +42,7 @@ public items = signal<Item[]>([]);  public counter = signal<number>(0);
       next: () => {
          if(this.items !== undefined) {
                 this.items.update(items => items.filter(item => item.id !== articleId));
-                this.counter.update(value => value + 1)
-        }      
+        }
       },
       error: (err) => {
         console.error('Failed to delete item with ID: ' + articleId, err);

@@ -22,8 +22,7 @@ export class ItemsService {
           description: item.description,
         }))
       )
-  );
-
+    );
   }
 
   getItem(itemId: string): Observable<Item> {
@@ -44,6 +43,7 @@ export class ItemsService {
   putItem(item: Item, itemId: string): Observable<Item> {
     return this.http.put<Item>(this.apiUrl + "items/" + itemId, item)
   }
+
   deleteItem(itemId: string): Observable<Item> {
     return this.http.delete<Item>(this.apiUrl + "items/" + itemId)
   }

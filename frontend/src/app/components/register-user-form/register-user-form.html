@@ -4,23 +4,22 @@
         <fieldset class="{{'fieldset'}}">
             <legend class="{{'fieldset-legend'}}">Elektronska pošta:</legend>
             <label class="input validator">
-                <input type="email" id="username" formControlName="email" placeholder="Vnesi elektronsko pošto" required />
+                <input type="email" id="username" formControlName="email" placeholder="Vnesi elektronsko pošto" email="true" email required />
         </label>  
         </fieldset>
 
         <fieldset class="{{'fieldset'}}">
             <legend class="{{'fieldset-legend'}}">Telefonska številka:</legend>
             <label class="input validator">
-                <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" formControlName="phoneNumber" placeholder="Vnesi telefonsko številko" required />
-        </label>  
+                <input type="tel" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" placeholder="Vnesi telefonsko številko" required />
+            </label>
+        </fieldset>
 
         <fieldset class="{{'fieldset'}}">
             <legend class="{{'fieldset-legend'}}">IBAN:</legend>
             <label class="input validator">
-                <input type="text" id="iban" name="iban" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" formControlName="iban" placeholder="Vnesi veljaven IBAN" required />
-        </label>  
-        </fieldset>
-
+                <input type="text" id="iban" name="iban"  formControlName="iban" placeholder="Vnesi veljaven IBAN" required />
+          </label>  
         </fieldset>
         <fieldset class="{{'fieldset'}}">
           <legend class="{{'fieldset-legend'}}">Geslo:</legend>
@@ -33,10 +32,22 @@
           <label class="input validator">
               <input type="password" id="passwordConfirm" formControlName="passwordConfirm" placeholder="Potrdi geslo..." required/>
           </label>
+          @if (this.password?.value != this.passwordConfirm?.value 
+            && this.password?.value != null
+            && this.passwordConfirm?.value != null
+          )  
+          {
+            <div role="alert" class="text-red-600 alert-error">
+              <span>Gesla se rabijo ujemati!</span>
+            </div>
+          }
         </fieldset>
         <div class="text-center flex items-center justify-between">
-              <button (click)="registerBtnClick()" class="{{'btn'}}" type="submit">
+              <button (click)="registerBtnClick()" class="{{'btn'}}" [disabled]="userForm.invalid || isLoading" type="submit">
                 Prijavi
+                @if (isLoading) {
+                  <span class="loading loading-spinner loading-sm"></span>
+                }
               </button>
         </div>
     </form>
