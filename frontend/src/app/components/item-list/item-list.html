@@ -10,14 +10,16 @@
               </ul>
             </div>
             <div class="flex items-center justify-center gap-2">
-              <button (click)="clickNavigateEditForm(item.id.toString())" class="{{'btn btn-neutral'}}">Uredi</button>
-              <button (click)="clickRemoveItemBtn(item.id.toString())" class="{{'btn btn-soft btn-error'}}">Odstrani</button>
-              @if (isLoggedIn() == true) 
+              @if (isLoggedIn() == true && isAdmin() == true) 
+              {
+                <button (click)="clickNavigateEditForm(item.id.toString())" class="{{'btn btn-neutral'}}">Uredi</button>
+                <button (click)="clickRemoveItemBtn(item.id.toString())" class="{{'btn btn-soft btn-error'}}">Odstrani</button>
+              }
+              @if (isLoggedIn() == true && isAdmin() == false) 
               {
                 <button>Začni pogajanje</button>
               }
             </div>
-            
             <figure>
               <img
                 src=""

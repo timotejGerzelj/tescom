@@ -1,63 +1,66 @@
 <div class="flex justify-center">
-  <div class="w-full max-w-xs"> 
-    <form [formGroup]="itemForm" id="itemForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center" >
-      <fieldset class="{{'fieldset'}}">
-        <legend class="{{'fieldset-legend'}}">Ime izdelka:</legend>
-        <input type="text" id="name" class="input" formControlName="name" placeholder="Vnesi ime artikla tukaj" required />
-      </fieldset>
+  @if (this.isLoggedIn() && this.isAdmin())
+  {
+    <div class="w-full max-w-xs"> 
+      <form [formGroup]="itemForm" id="itemForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 content-center" >
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Ime izdelka:</legend>
+          <input type="text" id="name" class="input" formControlName="name" placeholder="Vnesi ime artikla tukaj" required />
+        </fieldset>
 
-      <fieldset class="{{'fieldset'}}">
-        <legend class="{{'fieldset-legend'}}">Količina:</legend>
-        <input type="number" id="quantity"  class="input validator" formControlName="quantity" min="1" placeholder="Količina rabi biti pozitivna ter številka"
-         placeholder="Vnesi količino tukaj..." required />
-      </fieldset>
-      @if (quantity?.hasError('min'))
-      {
-        <div role="alert" class="text-red-600 alert-error">
-          <span>Količina rabi biti večja od 0!</span>
-        </div>
-      }
-      <fieldset class="{{'fieldset'}}">
-        <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
-        <input type="text" id="unitOfMeasure" class="input" formControlName="unitOfMeasure" placeholder="Vnesi merilno enoto tukaj..." required />
-      </fieldset>
-      <fieldset class="{{'fieldset'}}">
-        <legend class="{{'fieldset-legend'}}">Cena:</legend>
-        <input type="number" id="price" class="input validator" min="1" placeholder="Cena rabi biti pozitivna ter številka"
-         formControlName="price" placeholder="Vnesi ceno tukaj..." required />
-      </fieldset>
-      @if (price?.hasError('min'))
-      {
-        <div role="alert" class="text-red-600 alert-error">
-          <span>Cena rabi biti večja od 0!</span>
-        </div>
-      }
-      <fieldset class="{{'fieldset'}} {{'text-center'}}">
-        <legend class="{{'fieldset-legend'}}">Opis:</legend>
-        <textarea type="text" id="description" class="input" formControlName="description" placeholder="opis artikla..." ></textarea>
-      </fieldset>
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Količina:</legend>
+          <input type="number" id="quantity"  class="input validator" formControlName="quantity" min="1" placeholder="Količina rabi biti pozitivna ter številka"
+           placeholder="Vnesi količino tukaj..." required />
+        </fieldset>
+        @if (quantity?.hasError('min'))
+        {
+          <div role="alert" class="text-red-600 alert-error">
+            <span>Količina rabi biti večja od 0!</span>
+          </div>
+        }
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
+          <input type="text" id="unitOfMeasure" class="input" formControlName="unitOfMeasure" placeholder="Vnesi merilno enoto tukaj..." required />
+        </fieldset>
+        <fieldset class="{{'fieldset'}}">
+          <legend class="{{'fieldset-legend'}}">Cena:</legend>
+          <input type="number" id="price" class="input validator" min="1" placeholder="Cena rabi biti pozitivna ter številka"
+           formControlName="price" placeholder="Vnesi ceno tukaj..." required />
+        </fieldset>
+        @if (price?.hasError('min'))
+        {
+          <div role="alert" class="text-red-600 alert-error">
+            <span>Cena rabi biti večja od 0!</span>
+          </div>
+        }
+        <fieldset class="{{'fieldset'}} {{'text-center'}}">
+          <legend class="{{'fieldset-legend'}}">Opis:</legend>
+          <textarea type="text" id="description" class="input" formControlName="description" placeholder="opis artikla..." ></textarea>
+        </fieldset>
 
-      <div class="text-center flex items-center justify-between">
-          @if (!this.articleId) {
-            <button (click)="createItem()" class="{{'btn'}}" type="submit" [disabled]="itemForm.invalid || isLoading" >
-              Ustvari
-              @if (isLoading) {
-                <span class="loading loading-spinner loading-sm"></span>
-              }
-            </button>
-          }
-          @else {
-            <button (click)="updateItem()" class="{{'btn'}}" type="submit" [disabled]="itemForm.invalid || isLoading" >
-              Posodobi
-              @if (isLoading) {
-                <span class="loading loading-spinner loading-sm"></span>
-              }
-            </button>
-          }
-        <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
-          Nazaj
-        </a>
-      </div>
-    </form>
-  </div>
+        <div class="text-center flex items-center justify-between">
+            @if (!this.articleId) {
+              <button (click)="createItem()" class="{{'btn'}}" type="submit" [disabled]="itemForm.invalid || isLoading" >
+                Ustvari
+                @if (isLoading) {
+                  <span class="loading loading-spinner loading-sm"></span>
+                }
+              </button>
+            }
+            @else {
+              <button (click)="updateItem()" class="{{'btn'}}" type="submit" [disabled]="itemForm.invalid || isLoading" >
+                Posodobi
+                @if (isLoading) {
+                  <span class="loading loading-spinner loading-sm"></span>
+                }
+              </button>
+            }
+          <a class="{{'link'}} inline-block align-baseline" href="items-list-view" >
+            Nazaj
+          </a>
+        </div>
+      </form>
+    </div>
+  }
 </div>

@@ -17,6 +17,7 @@ export class AuthService {
   private apiUrl = 'http://127.0.0.1:8090/'
   public pb = new PocketBase(this.apiUrl);
   public isLoggedIn$ = new BehaviorSubject<boolean>(this.pb.authStore.isValid);
+  public isAdmin$ = new BehaviorSubject<boolean>(false)
 
   public async Login(username: string, password: string) : Promise<boolean>
   {
@@ -25,7 +26,14 @@ export class AuthService {
       console.log(this.pb.authStore.isValid);
       console.log(this.pb.authStore.token);
       console.log(this.pb.authStore.record?.id);
-      this.isLoggedIn$.next(true);
+      if (this.pb.authStore.isValid) {
+        const user = this.pb.authStore.record;
+        this.isLoggedIn$.next(true);
+        if (user)
+        {
+          this.isAdmin$.next(user['role'])
+        }
+      }
       console.log(this.isLoggedIn$)
       return this.pb.authStore.isValid;
     }
@@ -50,6 +58,8 @@ export class AuthService {
   Logout() {
     this.pb.authStore.clear();
     this.isLoggedIn$.next(false);
+    this.isAdmin$.next(false);
+
   }
 
 }

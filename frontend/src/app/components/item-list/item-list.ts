@@ -16,8 +16,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ItemList {
   constructor(private router: Router, private itemService: ItemsService, private authService: AuthService) {}
-  public items = signal<Item[]>([]);  public counter = signal<number>(0);
+  
+  public items = signal<Item[]>([]);  
   public isLoggedIn = signal(false);
+  public isAdmin = signal(false);
+
   ngOnInit(): void {
     this.loadItems();
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
@@ -25,7 +28,11 @@ export class ItemList {
       this.isLoggedIn.set(loggedIn);
       console.log(this.isLoggedIn)
     });
-    
+    this.authService.isAdmin$.subscribe((isAdmin) => {
+      console.log('🧪 isAdmin$ emitted:', isAdmin);
+      this.isAdmin.set(isAdmin);
+      console.log(this.isAdmin)
+    });
   }
   
 
