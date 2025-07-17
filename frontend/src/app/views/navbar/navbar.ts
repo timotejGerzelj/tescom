@@ -15,6 +15,8 @@ export class Navbar {
   constructor(private router: Router, public authService: AuthService) {}
 
   public isLoggedIn = signal(false);
+    public showUserMenu = false;
+
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
       console.log('🧪 isLoggedIn$ emitted:', loggedIn);
@@ -22,6 +24,9 @@ export class Navbar {
       console.log(this.isLoggedIn)
     });
 
+  }
+  toggleUserMenu() {
+    this.showUserMenu = !this.showUserMenu;
   }
 
   logoutBtnClicked() {
