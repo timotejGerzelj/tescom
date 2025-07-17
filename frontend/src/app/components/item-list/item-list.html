@@ -12,12 +12,16 @@
             <div class="flex items-center justify-center gap-2">
               <button (click)="clickNavigateEditForm(item.id.toString())" class="{{'btn btn-neutral'}}">Uredi</button>
               <button (click)="clickRemoveItemBtn(item.id.toString())" class="{{'btn btn-soft btn-error'}}">Odstrani</button>
+              @if (isLoggedIn() == true) 
+              {
+                <button>Začni pogajanje</button>
+              }
             </div>
             
             <figure>
               <img
                 src=""
-                alt="Shoes" />
+                alt="" />
             </figure>
         </div>
     </li>

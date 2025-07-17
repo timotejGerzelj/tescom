@@ -13,6 +13,9 @@ export class LoginForm {
   constructor(private router: Router, private authService: AuthService) {}
   
   protected isLoading = false;
+
+  ngOnInit() {}
+
   public itemForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -23,8 +26,12 @@ export class LoginForm {
     var password = this.itemForm.get('password')?.value?.toString()
     var username = this.itemForm.get('username')?.value?.toString()
     if (password != undefined && username != undefined) {
-      var loginIsSuccesfull = this.authService.Login(password, username)
-      //this.router.navigate("")
+      this.authService.Login(password, username).then(result => {
+        if (result === true) {
+          console.log(result)
+          this.router.navigate(['items-list-view'])
+        }  
+      })
     }
   }
 }

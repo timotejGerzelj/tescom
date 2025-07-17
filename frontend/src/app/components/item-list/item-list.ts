@@ -17,8 +17,15 @@ import { AuthService } from '../../services/auth.service';
 export class ItemList {
   constructor(private router: Router, private itemService: ItemsService, private authService: AuthService) {}
   public items = signal<Item[]>([]);  public counter = signal<number>(0);
+  public isLoggedIn = signal(false);
   ngOnInit(): void {
     this.loadItems();
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      console.log('🧪 isLoggedIn$ emitted:', loggedIn);
+      this.isLoggedIn.set(loggedIn);
+      console.log(this.isLoggedIn)
+    });
+    
   }
   
 

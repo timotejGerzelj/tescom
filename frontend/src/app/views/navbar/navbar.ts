@@ -1,21 +1,21 @@
 import { Component, inject, signal, Signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-navbar',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
 export class Navbar {
-  constructor(private router: Router, public authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   public isLoggedIn = signal(false);
-    public showUserMenu = false;
+  public showUserMenu = false;
 
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
@@ -25,13 +25,14 @@ export class Navbar {
     });
 
   }
-  toggleUserMenu() {
-    this.showUserMenu = !this.showUserMenu;
-  }
 
   logoutBtnClicked() {
+    console.log("click")
     this.authService.Logout()
   }
 
+  toggleUserMenu() {
+    this.showUserMenu = !this.showUserMenu;
+  }
 
 }
