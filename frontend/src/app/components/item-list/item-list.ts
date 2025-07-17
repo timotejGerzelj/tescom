@@ -4,6 +4,7 @@ import { Item } from '../../models/item.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ItemsService } from '../../services/items.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -14,7 +15,7 @@ import { ItemsService } from '../../services/items.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemList {
-  constructor(private router: Router, private itemService: ItemsService, private cd: ChangeDetectorRef) {}
+  constructor(private router: Router, private itemService: ItemsService, private authService: AuthService) {}
   public items = signal<Item[]>([]);  public counter = signal<number>(0);
   ngOnInit(): void {
     this.loadItems();

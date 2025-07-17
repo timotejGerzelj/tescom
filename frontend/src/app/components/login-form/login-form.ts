@@ -23,7 +23,8 @@ export class LoginForm {
     var password = this.itemForm.get('password')?.value?.toString()
     var username = this.itemForm.get('username')?.value?.toString()
     if (password != undefined && username != undefined) {
-      this.authService.Login(password, username)
+      var loginIsSuccesfull = this.authService.Login(password, username)
+      //this.router.navigate("")
     }
   }
 }

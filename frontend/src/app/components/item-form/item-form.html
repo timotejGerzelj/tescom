@@ -11,7 +11,12 @@
         <input type="number" id="quantity"  class="input validator" formControlName="quantity" min="1" placeholder="Količina rabi biti pozitivna ter številka"
          placeholder="Vnesi količino tukaj..." required />
       </fieldset>
-
+      @if (quantity?.hasError('min'))
+      {
+        <div role="alert" class="text-red-600 alert-error">
+          <span>Količina rabi biti večja od 0!</span>
+        </div>
+      }
       <fieldset class="{{'fieldset'}}">
         <legend class="{{'fieldset-legend'}}">Merilna enota:</legend>
         <input type="text" id="unitOfMeasure" class="input" formControlName="unitOfMeasure" placeholder="Vnesi merilno enoto tukaj..." required />
