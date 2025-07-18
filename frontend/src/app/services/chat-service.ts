@@ -10,8 +10,13 @@ export class ChatService {
 
   }
 
+  getChatMessages(chatId: string, sellerId: string, buyerId: string)
+  {
+
+  }
+
   createNewChat(userId: string, itemId: string)
   {
-    
+
   }
 }
