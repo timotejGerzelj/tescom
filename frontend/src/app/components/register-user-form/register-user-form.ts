@@ -53,8 +53,6 @@ export class RegisterUserForm {
     return password === passwordConfirm ? null : { passwordMismatch: true };    };
   }
 
-
-
   async registerBtnClick() {
     const user = { ...this.userForm.value } as User;    
     this.isLoading = true;

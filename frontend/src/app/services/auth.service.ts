@@ -1,33 +1,35 @@
 import { Injectable } from "@angular/core";
-import PocketBase, { RecordModel } from 'pocketbase';
 import { User } from "../models/user.model";
 import { BehaviorSubject, Observable } from "rxjs";
+import { PocketbaseService } from "./pocketbase-service";
+import PocketBase from 'pocketbase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() { 
-    this.pb.authStore.onChange(() => {
-      this.isLoggedIn$.next(this.pb.authStore.isValid);
+  constructor(private pbService: PocketbaseService) { 
+    console.log(pbService)
+    const pb = pbService.pb;
+    pb.authStore.onChange(() => {
+      this.isLoggedIn$.next(pb.authStore.isValid);
     });
   }
 
 
-  private apiUrl = 'http://127.0.0.1:8090/'
-  public pb = new PocketBase(this.apiUrl);
-  public isLoggedIn$ = new BehaviorSubject<boolean>(this.pb.authStore.isValid);
+  public isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isAdmin$ = new BehaviorSubject<boolean>(false)
 
   public async Login(username: string, password: string) : Promise<boolean>
   {
     try {
-      await this.pb.collection("users").authWithPassword(password, username);
-      console.log(this.pb.authStore.isValid);
-      console.log(this.pb.authStore.token);
-      console.log(this.pb.authStore.record?.id);
-      if (this.pb.authStore.isValid) {
-        const user = this.pb.authStore.record;
+      const pb = this.pbService.pb;
+      await pb.collection("users").authWithPassword(password, username);
+      console.log(pb.authStore.isValid);
+      console.log(pb.authStore.token);
+      console.log(pb.authStore.record?.id);
+      if (pb.authStore.isValid) {
+        const user = pb.authStore.record;
         this.isLoggedIn$.next(true);
         if (user)
         {
@@ -35,7 +37,7 @@ export class AuthService {
         }
       }
       console.log(this.isLoggedIn$)
-      return this.pb.authStore.isValid;
+      return pb.authStore.isValid;
     }
     catch (error: any) {
       console.error("Login failed:", error?.message || error);
@@ -45,7 +47,8 @@ export class AuthService {
 
   public async Register(user: User, passwordConfirm: string): Promise<Observable<User>>
   {
-    return  await this.pb.collection('users').create({
+    const pb = this.pbService.pb;
+    return  await pb.collection('users').create({
       email: user.email,
       phoneNumber: user.phoneNumber,
       role: false,
@@ -56,7 +59,8 @@ export class AuthService {
   }
 
   Logout() {
-    this.pb.authStore.clear();
+    const pb = this.pbService.pb;
+    pb.authStore.clear();
     this.isLoggedIn$.next(false);
     this.isAdmin$.next(false);
 
