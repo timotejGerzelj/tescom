@@ -1,1 +1,17 @@
-<p>chat-messages works!</p>
+<div>
+    <ul>
+        @for (item of chatMessages; track item.id) {  
+            <li [ngClass]="item.userId === this.currentUserId ? 'chat chat-start' : 'chat chat-end'">
+                <div class="chat-image avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                          alt="Tailwind CSS chat bubble component"
+                          src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                        />
+                    </div>
+                </div>
+                <div class="chat-bubble">{{ item.message }}</div>
+            </li>
+        }
+    </ul>
+</div>

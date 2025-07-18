@@ -9,7 +9,7 @@ export const routes: Routes = [
     {path: 'create-items-view', component: CreateItem},
     {path: 'create-items-view/:itemId', component: CreateItem},
     {path: 'items-list-view', component: ItemListView},
-    {path: 'negotiation-chat-view/:itemId', component: NegotiationChatView},
+    {path: 'negotiation-chat-view', component: NegotiationChatView},
     {path: '', component: LoginFormView},
     {path: 'register-user', component: RegisterUserView}
 ];
