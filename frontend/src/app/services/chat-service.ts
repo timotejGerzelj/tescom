@@ -7,7 +7,7 @@ import { PocketbaseService } from './pocketbase-service';
 export class ChatService {
 
   constructor(private pbService: PocketbaseService) { 
-
+    
   }
 
   getChatMessages(chatId: string, sellerId: string, buyerId: string)

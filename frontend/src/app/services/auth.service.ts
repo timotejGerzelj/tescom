@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { User } from "../models/user.model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { PocketbaseService } from "./pocketbase-service";
-import PocketBase from 'pocketbase';
 
 @Injectable({
   providedIn: 'root'
